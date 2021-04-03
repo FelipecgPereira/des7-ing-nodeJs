@@ -1,7 +1,12 @@
+import { User } from './../../entities/User';
 import { injectable, inject } from "tsyringe";
 
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { ShowUserProfileError } from "./ShowUserProfileError";
+
+interface IRequest{
+  user_id: string
+}
 
 @injectable()
 export class ShowUserProfileUseCase {
@@ -10,7 +15,7 @@ export class ShowUserProfileUseCase {
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute(user_id: string) {
+  async execute({user_id}: IRequest){
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
