@@ -1,3 +1,4 @@
+import { User } from './../../entities/User';
 import { inject, injectable } from "tsyringe";
 import { hash } from 'bcryptjs';
 
@@ -13,7 +14,7 @@ export class CreateUserUseCase {
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute({ name, email, password }: ICreateUserDTO) {
+  async execute({ name, email, password }: ICreateUserDTO):Promise<User> {
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
     if (userAlreadyExists) {

@@ -10,7 +10,7 @@ export class ShowUserProfileController {
 
     const showUserProfile = container.resolve(ShowUserProfileUseCase);
 
-    const user = await showUserProfile.execute(id);
+    const user = await showUserProfile.execute({user_id: id});
 
     const profileDTO = ProfileMap.toDTO(user);
 
