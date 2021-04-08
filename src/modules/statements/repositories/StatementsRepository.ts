@@ -4,6 +4,7 @@ import { Statement } from "../entities/Statement";
 import { ICreateStatementDTO } from "../useCases/createStatement/ICreateStatementDTO";
 import { IGetBalanceDTO } from "../useCases/getBalance/IGetBalanceDTO";
 import { IGetStatementOperationDTO } from "../useCases/getStatementOperation/IGetStatementOperationDTO";
+import { ICreateTransferDTO } from "../useCases/transferOperation/ICreateTransferDTO";
 import { IStatementsRepository } from "./IStatementsRepository";
 
 export class StatementsRepository implements IStatementsRepository {
@@ -61,4 +62,23 @@ export class StatementsRepository implements IStatementsRepository {
 
     return { balance }
   }
+
+  async createTransfer({
+    user_id,
+    amount,
+    description,
+    type,
+    sender_id
+  }: ICreateTransferDTO):Promise<Statement>{
+    const statement = this.repository.create({
+      user_id,
+      amount,
+      description,
+      sender_id,
+      type
+    });
+
+    return this.repository.save(statement);
+  };
+
 }
